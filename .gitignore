@@ -1,0 +1,20 @@
+# Captures : captures d'écran + audio + transcriptions (données potentiellement sensibles)
+capture_*/
+**/capture_*/
+
+# Fichiers de travail
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build PyInstaller (le .exe se reconstruit avec exe/build_exe.bat)
+exe/build/
+exe/dist/
+exe/*.spec
+
+# Configuration locale de Claude Code
+.claude/settings.local.json
+
+# Audio / images générés ailleurs que dans les captures
+*.wav

@@ -1,0 +1,9 @@
+pynput
+pillow
+sounddevice
+soundfile
+numpy
+faster-whisper
+screeninfo
+# Uniquement pour construire le .exe (exe/build_exe.bat) :
+# pyinstaller
