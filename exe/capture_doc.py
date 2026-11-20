@@ -122,7 +122,10 @@ def main():
     try:
         from faster_whisper import WhisperModel
 
-        model = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8")
+        # Mode hors ligne : si un dossier « modele_whisper » existe à côté de l'exécutable, on l'utilise
+        model_dir = os.path.join(BASE_DIR, "modele_whisper")
+        kw = {"download_root": model_dir} if os.path.isdir(model_dir) else {}
+        model = WhisperModel(WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", **kw)
         # On passe directement le signal (numpy) pour ne pas dépendre du décodeur PyAV
         audio_np = audio_data.astype("float32").flatten()
         segments, _ = model.transcribe(audio_np, language="fr")
@@ -161,6 +164,7 @@ def check():
     print("faster_whisper OK, assets VAD présents :", os.path.isdir(get_assets_path()))
     print("sounddevice OK, périphériques audio :", len(sd.query_devices()))
     print("screeninfo OK, écrans :", len(get_monitors()))
+    print("Dossier de sortie des captures :", BASE_DIR)
 
 
 if __name__ == "__main__":

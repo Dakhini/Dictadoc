@@ -29,7 +29,7 @@ Un dossier `capture_AAAAMMJJ_HHMMSS/` contenant :
 Dans Claude Code, ouvrir le projet DictaDoc et lancer le skill :
 
 ```
-/autodoc capture_AAAAMMJJ_HHMMSS
+/dictadoc capture_AAAAMMJJ_HHMMSS
 ```
 
 Claude lit `steps.json`, `transcript.txt` et les captures, puis écrit `documentation.md` dans le dossier de capture. Sans argument, le dossier le plus récent est utilisé. Les données sensibles visibles sur les captures (comptes, mots de passe, etc.) sont signalées avant diffusion.
@@ -61,19 +61,26 @@ Double-cliquer sur **`lancer_capture.bat`** (équivalent de `py -3.12 capture_do
 - Au lancement, le programme demande d'appuyer sur la touche à utiliser (², F9, &...). **Échap** est refusée car réservée à l'arrêt.
 - L'écran capturé est celui où se trouve le curseur au moment de l'appui.
 - La touche choisie est « avalée » : elle n'écrit rien dans l'application active (elle est donc inutilisable pour taper pendant l'enregistrement).
-- **Échap** arrête l'enregistrement, la suite (transcription, `steps.json`, `/autodoc`) est identique.
-- Cette variante n'est pas (encore) disponible en `.exe`.
+- **Échap** arrête l'enregistrement, la suite (transcription, `steps.json`, `/dictadoc`) est identique.
+- Version `.exe` portable : `DictaDoc_Capture_Touche.exe` (voir ci-dessous).
 
-## Version .exe (sans Python)
+## Version .exe portable (sans Python)
 
-Le dossier `exe/` contient une copie de `capture_doc.py` empaquetée avec PyInstaller. Les fichiers à la racine ne sont pas concernés.
+Le dossier `exe/` contient des copies des scripts, empaquetées avec PyInstaller en **un seul fichier** chacune. Les fichiers à la racine ne sont pas concernés.
 
-- Exécutable : `exe/dist/AutoDoc_Capture/AutoDoc_Capture.exe` (à utiliser avec tout le dossier `AutoDoc_Capture`, ~320 Mo, qu'on peut copier sur un autre poste).
-- Les dossiers `capture_*` sont créés **à côté du `.exe`**.
-- `AutoDoc_Capture.exe --check` vérifie que les composants (Whisper, audio, écrans) sont bien embarqués.
-- Reconstruction : `exe/build_exe.bat` (Python 3.12 + `py -3.12 -m pip install pyinstaller`). À refaire si `capture_doc.py` change : la copie dans `exe/` doit alors être resynchronisée.
-- Le modèle Whisper n'est pas inclus : il est téléchargé au premier lancement (Internet requis une fois).
-- Un antivirus peut signaler l'exécutable (écoute clavier/souris + micro) : prévoir une exception si besoin.
+| Exécutable | Équivalent |
+|---|---|
+| `exe/dist/DictaDoc_Capture.exe` | `capture_doc.py` (capture au clic de souris) |
+| `exe/dist/DictaDoc_Capture_Touche.exe` | `capture_doc_touche.py` (capture avec une touche au choix) |
+
+**Utilisation :** copier le `.exe` (~130 Mo) dans n'importe quel dossier, puis double-cliquer dessus. Les dossiers `capture_*` sont créés **dans le dossier où se trouve le `.exe`**. Aucune installation n'est nécessaire.
+
+- Le démarrage prend 20 à 30 secondes : le `.exe` se décompresse à chaque lancement. Attendre l'affichage de « Enregistrement démarré ».
+- Le modèle Whisper n'est pas inclus : il est téléchargé au premier lancement sur chaque poste (Internet requis une fois, ensuite stocké dans le profil de l'utilisateur).
+- **Poste sans Internet :** placer un dossier `modele_whisper` (cache du modèle `small`) à côté du `.exe` : il sera utilisé à la place du téléchargement.
+- `DictaDoc_Capture.exe --check` vérifie que les composants (Whisper, audio, écrans) sont embarqués et affiche le dossier de sortie.
+- Reconstruction : `exe/build_exe.bat` et `exe/build_exe_touche.bat` (Python 3.12 + `py -3.12 -m pip install pyinstaller`). À refaire si un script change : les copies dans `exe/` doivent alors être resynchronisées.
+- Un antivirus peut signaler l'exécutable (écoute clavier + micro) : prévoir une exception si besoin.
 
 ## Dépannage
 

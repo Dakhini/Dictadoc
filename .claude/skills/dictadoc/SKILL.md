@@ -1,9 +1,9 @@
 ---
-name: autodoc
+name: dictadoc
 description: Génère une documentation Markdown étape par étape à partir d'un dossier capture_AAAAMMJJ_HHMMSS produit par capture_doc.py (captures d'écran + steps.json + transcript.txt). À utiliser quand l'utilisateur demande de créer/rédiger la doc, la procédure ou le tutoriel à partir d'une capture, ou fournit un dossier capture_*.
 ---
 
-# AutoDoc : génération de documentation à partir d'une capture
+# DictaDoc : génération de documentation à partir d'une capture
 
 ## Entrée
 
